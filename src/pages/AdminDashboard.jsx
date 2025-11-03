@@ -208,52 +208,69 @@ const AdminDashboard = () => {
   const renderQRManagement = () => (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">QR Code Management</h2>
-        <button onClick={() => setShowQRModal(true)} className="btn-primary flex items-center gap-2">
+        <h2 className="text-3xl font-bold text-white">QR Code Management</h2>
+        <motion.button 
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setShowQRModal(true)} 
+          className="btn-primary flex items-center gap-2"
+        >
           <Plus className="w-5 h-5" /> Generate QR
-        </button>
+        </motion.button>
       </div>
 
       {/* Rooms */}
-      <div className="card">
-        <h3 className="text-xl font-bold mb-4">Room QR Codes</h3>
+      <div className="card-premium">
+        <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <QrCode className="w-5 h-5 text-primary-400" />
+          Room QR Codes
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {mockData.rooms.map((room) => (
             <motion.div
               key={room.id}
-              whileHover={{ scale: 1.05 }}
-              className="border-2 border-gray-200 rounded-lg p-4 text-center"
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="border-2 border-blue-900/50 bg-dark-100/50 backdrop-blur-sm rounded-xl p-4 text-center group hover:border-primary-500/50 transition-all duration-300"
             >
-              <div className="bg-white p-4 rounded-lg mb-3 inline-block">
+              <div className="bg-white p-4 rounded-xl mb-3 inline-block shadow-lg group-hover:shadow-primary-500/30 transition-all duration-300">
                 <QRCodeSVG value={`room-${room.roomNo}`} size={120} />
               </div>
-              <h4 className="font-bold">Room {room.roomNo}</h4>
-              <p className="text-sm text-gray-600">Floor {room.floor} - {room.type}</p>
-              <button className="mt-2 text-primary-600 text-sm flex items-center gap-1 mx-auto hover:text-primary-700">
+              <h4 className="font-bold text-white">Room {room.roomNo}</h4>
+              <p className="text-sm text-gray-400">Floor {room.floor} - {room.type}</p>
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                className="mt-2 text-primary-400 hover:text-primary-300 text-sm flex items-center gap-1 mx-auto font-semibold"
+              >
                 <Download className="w-4 h-4" /> Download
-              </button>
+              </motion.button>
             </motion.div>
           ))}
         </div>
       </div>
 
       {/* Areas */}
-      <div className="card">
-        <h3 className="text-xl font-bold mb-4">Area QR Codes</h3>
+      <div className="card-premium">
+        <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+          <Building2 className="w-5 h-5 text-primary-400" />
+          Area QR Codes
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {mockData.areas.map((area) => (
             <motion.div
               key={area.id}
-              whileHover={{ scale: 1.05 }}
-              className="border-2 border-gray-200 rounded-lg p-4 text-center"
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="border-2 border-blue-900/50 bg-dark-100/50 backdrop-blur-sm rounded-xl p-4 text-center group hover:border-primary-500/50 transition-all duration-300"
             >
-              <div className="bg-white p-4 rounded-lg mb-3 inline-block">
+              <div className="bg-white p-4 rounded-xl mb-3 inline-block shadow-lg group-hover:shadow-primary-500/30 transition-all duration-300">
                 <QRCodeSVG value={`area-${area.name}`} size={120} />
               </div>
-              <h4 className="font-bold">{area.name}</h4>
-              <button className="mt-2 text-primary-600 text-sm flex items-center gap-1 mx-auto hover:text-primary-700">
+              <h4 className="font-bold text-white">{area.name}</h4>
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                className="mt-2 text-primary-400 hover:text-primary-300 text-sm flex items-center gap-1 mx-auto font-semibold"
+              >
                 <Download className="w-4 h-4" /> Download
-              </button>
+              </motion.button>
             </motion.div>
           ))}
         </div>
@@ -264,7 +281,7 @@ const AdminDashboard = () => {
   const renderDepartments = () => (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Departments</h2>
+        <h2 className="text-3xl font-bold text-white">Departments</h2>
         <button onClick={() => setShowAddDeptModal(true)} className="btn-primary flex items-center gap-2">
           <Plus className="w-5 h-5" /> Add Department
         </button>
@@ -274,21 +291,23 @@ const AdminDashboard = () => {
         {mockData.departments.map((dept) => (
           <motion.div
             key={dept.id}
-            whileHover={{ scale: 1.03, y: -5 }}
-            className="card border-l-4 border-primary-500"
+            whileHover={{ scale: 1.05, y: -8 }}
+            className="card-premium border-l-4 border-primary-500 group"
           >
-            <div className="flex justify-between items-start mb-4">
-              <h3 className="text-xl font-bold">{dept.name}</h3>
-              <Settings className="w-5 h-5 text-gray-400 cursor-pointer hover:text-gray-600" />
+            <div className="flex justify-between items-start mb-4 relative z-10">
+              <h3 className="text-xl font-bold text-white group-hover:text-primary-300 transition-colors duration-300">{dept.name}</h3>
+              <motion.div whileHover={{ rotate: 90 }} transition={{ duration: 0.3 }}>
+                <Settings className="w-5 h-5 text-gray-400 cursor-pointer hover:text-primary-400 transition-colors duration-300" />
+              </motion.div>
             </div>
-            <div className="space-y-2">
-              <div className="flex justify-between">
-                <span className="text-gray-600">Staff Members:</span>
-                <span className="font-semibold">{dept.staffCount}</span>
+            <div className="space-y-3 relative z-10">
+              <div className="flex justify-between items-center p-3 bg-blue-950/30 rounded-lg">
+                <span className="text-gray-400">Staff Members:</span>
+                <span className="font-bold text-primary-400 text-lg">{dept.staffCount}</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Active Complaints:</span>
-                <span className="font-semibold text-orange-600">{dept.activeComplaints}</span>
+              <div className="flex justify-between items-center p-3 bg-blue-950/30 rounded-lg">
+                <span className="text-gray-400">Active Complaints:</span>
+                <span className="font-bold text-orange-400 text-lg">{dept.activeComplaints}</span>
               </div>
             </div>
           </motion.div>
@@ -300,36 +319,41 @@ const AdminDashboard = () => {
   const renderStaff = () => (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Staff Management</h2>
-        <button onClick={() => setShowAddStaffModal(true)} className="btn-primary flex items-center gap-2">
+        <h2 className="text-3xl font-bold text-white">Staff Management</h2>
+        <motion.button 
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setShowAddStaffModal(true)} 
+          className="btn-primary flex items-center gap-2"
+        >
           <UserPlus className="w-5 h-5" /> Add Staff
-        </button>
+        </motion.button>
       </div>
 
-      <div className="card">
+      <div className="card-premium">
         <div className="overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-100">
+            <thead className="bg-blue-950/50 border-b border-blue-900/50">
               <tr>
-                <th className="px-4 py-3 text-left">Emp ID</th>
-                <th className="px-4 py-3 text-left">Name</th>
-                <th className="px-4 py-3 text-left">Department</th>
-                <th className="px-4 py-3 text-left">Role</th>
-                <th className="px-4 py-3 text-left">Join Date</th>
-                <th className="px-4 py-3 text-left">Assigned</th>
-                <th className="px-4 py-3 text-left">Actions</th>
+                <th className="px-4 py-3 text-left text-gray-300 font-semibold">Emp ID</th>
+                <th className="px-4 py-3 text-left text-gray-300 font-semibold">Name</th>
+                <th className="px-4 py-3 text-left text-gray-300 font-semibold">Department</th>
+                <th className="px-4 py-3 text-left text-gray-300 font-semibold">Role</th>
+                <th className="px-4 py-3 text-left text-gray-300 font-semibold">Join Date</th>
+                <th className="px-4 py-3 text-left text-gray-300 font-semibold">Assigned</th>
+                <th className="px-4 py-3 text-left text-gray-300 font-semibold">Actions</th>
               </tr>
             </thead>
             <tbody>
               {mockData.staff.map((staff) => (
                 <motion.tr
                   key={staff.id}
-                  whileHover={{ backgroundColor: '#f9fafb' }}
-                  className="border-b"
+                  whileHover={{ backgroundColor: 'rgba(30, 58, 138, 0.2)' }}
+                  className="border-b border-blue-900/30 cursor-pointer"
                 >
-                  <td className="px-4 py-3">{staff.empId}</td>
-                  <td className="px-4 py-3 font-medium">{staff.name}</td>
-                  <td className="px-4 py-3">{staff.department}</td>
+                  <td className="px-4 py-3 text-gray-300">{staff.empId}</td>
+                  <td className="px-4 py-3 font-semibold text-white">{staff.name}</td>
+                  <td className="px-4 py-3 text-gray-300">{staff.department}</td>
                   <td className="px-4 py-3">
                     <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
                       staff.role === 'Supervisor' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'
@@ -337,12 +361,15 @@ const AdminDashboard = () => {
                       {staff.role}
                     </span>
                   </td>
-                  <td className="px-4 py-3">{staff.joinDate}</td>
-                  <td className="px-4 py-3">{staff.assignedComplaints} complaints</td>
+                  <td className="px-4 py-3 text-gray-300">{staff.joinDate}</td>
+                  <td className="px-4 py-3 text-gray-300">{staff.assignedComplaints} complaints</td>
                   <td className="px-4 py-3">
-                    <button className="text-primary-600 hover:text-primary-700 text-sm font-medium">
+                    <motion.button 
+                      whileHover={{ scale: 1.05 }}
+                      className="text-primary-400 hover:text-primary-300 text-sm font-semibold"
+                    >
                       Edit
-                    </button>
+                    </motion.button>
                   </td>
                 </motion.tr>
               ))}
@@ -409,7 +436,7 @@ const AdminDashboard = () => {
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => navigate('/')}
+              onClick={() => navigate('/', { replace: true })}
               className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-red-400 hover:bg-red-900/20 border border-transparent hover:border-red-500/30 rounded-xl transition-all duration-300"
             >
               <LogOut className="w-5 h-5" />

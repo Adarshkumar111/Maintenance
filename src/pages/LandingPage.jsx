@@ -1,35 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Wrench, Users, Shield, Package, QrCode, TrendingUp } from 'lucide-react';
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
 
 const LandingPage = () => {
   const navigate = useNavigate();
-  const heroRef = useRef(null);
-  const featuresRef = useRef(null);
-
-  useEffect(() => {
-    // GSAP animations
-    if (heroRef.current) {
-      gsap.from(heroRef.current, {
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        ease: 'power3.out',
-      });
-    }
-
-    if (featuresRef.current?.children) {
-      gsap.from(featuresRef.current.children, {
-        opacity: 0,
-        y: 30,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: 'power2.out',
-      });
-    }
-  }, []);
 
   const roles = [
     { title: 'Admin', icon: Shield, color: 'from-purple-500 to-indigo-600', path: '/admin' },
@@ -55,7 +29,7 @@ const LandingPage = () => {
       </div>
 
       {/* Hero Section */}
-      <div ref={heroRef} className="container mx-auto px-6 py-20 relative z-10">
+      <div className="container mx-auto px-6 py-20 relative z-10">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -143,7 +117,7 @@ const LandingPage = () => {
         </div>
 
         {/* Features Section */}
-        <div ref={featuresRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
           {features.map((feature, index) => (
             <motion.div
               key={feature.title}

@@ -173,10 +173,15 @@ const StoreSupervisorDashboard = () => {
                 </motion.button>
               ))}
             </nav>
-            <button onClick={() => navigate('/')} className="flex items-center gap-3 px-4 py-3 text-orange-100 hover:bg-orange-700 rounded-lg transition-all">
+            <motion.button 
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => navigate('/', { replace: true })} 
+              className="flex items-center gap-3 px-4 py-3 text-orange-100 hover:text-red-400 hover:bg-red-900/20 border border-transparent hover:border-red-500/30 rounded-xl transition-all duration-300"
+            >
               <LogOut className="w-5 h-5" />
               <span>Logout</span>
-            </button>
+            </motion.button>
           </motion.aside>
         )}
       </AnimatePresence>

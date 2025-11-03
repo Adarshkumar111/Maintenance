@@ -97,14 +97,20 @@ const StaffDashboard = () => {
   const renderAssignments = () => (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">My Assignments</h2>
+        <h2 className="text-3xl font-bold text-white">My Assignments</h2>
         <div className="flex gap-2">
-          <span className="px-4 py-2 bg-red-100 text-red-800 rounded-lg font-semibold">
+          <motion.span 
+            whileHover={{ scale: 1.05 }}
+            className="px-4 py-2 bg-red-500/20 text-red-400 border border-red-500/30 rounded-xl font-semibold backdrop-blur-sm"
+          >
             {assignments.filter(a => a.urgency === 'high').length} High Priority
-          </span>
-          <span className="px-4 py-2 bg-blue-100 text-blue-800 rounded-lg font-semibold">
+          </motion.span>
+          <motion.span 
+            whileHover={{ scale: 1.05 }}
+            className="px-4 py-2 bg-primary-500/20 text-primary-400 border border-primary-500/30 rounded-xl font-semibold backdrop-blur-sm"
+          >
             {assignments.length} Total
-          </span>
+          </motion.span>
         </div>
       </div>
 
@@ -112,43 +118,45 @@ const StaffDashboard = () => {
         {assignments.map((assignment) => (
           <motion.div
             key={assignment.id}
-            whileHover={{ scale: 1.02, y: -5 }}
-            className={`card border-l-4 cursor-pointer ${
+            whileHover={{ scale: 1.03, y: -8 }}
+            className={`card-premium border-l-4 cursor-pointer group ${
               assignment.urgency === 'high' ? 'border-red-500' :
               assignment.urgency === 'medium' ? 'border-orange-500' :
               'border-green-500'
             }`}
             onClick={() => setSelectedComplaint(assignment)}
           >
-            <div className="flex justify-between items-start mb-4">
+            <div className="flex justify-between items-start mb-4 relative z-10">
               <div>
-                <h3 className="text-xl font-bold">Room {assignment.roomNo}</h3>
-                <p className="text-sm text-gray-600">{assignment.category}</p>
+                <h3 className="text-xl font-bold text-white group-hover:text-primary-300 transition-colors duration-300">Room {assignment.roomNo}</h3>
+                <p className="text-sm text-gray-400">{assignment.category}</p>
               </div>
               <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                assignment.urgency === 'high' ? 'bg-red-100 text-red-800' :
-                assignment.urgency === 'medium' ? 'bg-orange-100 text-orange-800' :
-                'bg-green-100 text-green-800'
+                assignment.urgency === 'high' ? 'bg-red-500/20 text-red-400 border border-red-500/50' :
+                assignment.urgency === 'medium' ? 'bg-orange-500/20 text-orange-400 border border-orange-500/50' :
+                'bg-green-500/20 text-green-400 border border-green-500/50'
               }`}>
                 {assignment.urgency}
               </span>
             </div>
 
-            <p className="text-gray-700 mb-4">{assignment.description}</p>
+            <p className="text-gray-300 mb-4 relative z-10">{assignment.description}</p>
 
-            <div className="space-y-2 text-sm">
-              <div className="flex items-center gap-2 text-gray-600">
-                <Clock className="w-4 h-4" />
+            <div className="space-y-2 text-sm relative z-10">
+              <div className="flex items-center gap-2 text-gray-400 p-2 bg-blue-950/30 rounded-lg">
+                <Clock className="w-4 h-4 text-primary-400" />
                 <span>Assigned: {new Date(assignment.assignedAt).toLocaleString()}</span>
               </div>
-              <div className="flex items-center gap-2 text-red-600 font-semibold">
+              <div className="flex items-center gap-2 text-red-400 font-semibold p-2 bg-red-950/30 rounded-lg animate-pulse">
                 <Timer className="w-4 h-4" />
                 <span>Time remaining: {getTimeRemaining(assignment.deadline)}</span>
               </div>
             </div>
 
-            <div className="flex gap-2 mt-4">
-              <button
+            <div className="flex gap-2 mt-4 relative z-10">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={(e) => {
                   e.stopPropagation();
                   setSelectedComplaint(assignment);
@@ -158,8 +166,10 @@ const StaffDashboard = () => {
               >
                 <CheckCircle className="w-4 h-4 inline mr-1" />
                 Complete
-              </button>
-              <button
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
                 onClick={(e) => {
                   e.stopPropagation();
                   setSelectedComplaint(assignment);
@@ -169,7 +179,7 @@ const StaffDashboard = () => {
               >
                 <Package className="w-4 h-4 inline mr-1" />
                 Request Material
-              </button>
+              </motion.button>
             </div>
           </motion.div>
         ))}
@@ -180,32 +190,38 @@ const StaffDashboard = () => {
   const renderLeaveRequests = () => (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Leave Management</h2>
-        <button
+        <h2 className="text-3xl font-bold text-white">Leave Management</h2>
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           onClick={() => setShowLeaveModal(true)}
           className="btn-primary flex items-center gap-2"
         >
           <Calendar className="w-5 h-5" />
           Request Leave
-        </button>
+        </motion.button>
       </div>
 
-      <div className="card">
-        <h3 className="text-xl font-bold mb-4">Leave History</h3>
+      <div className="card-premium">
+        <h3 className="text-xl font-bold text-white mb-4">Leave History</h3>
         <div className="space-y-3">
           {[
             { id: 1, from: '2024-10-15', to: '2024-10-17', reason: 'Medical', status: 'approved' },
             { id: 2, from: '2024-09-20', to: '2024-09-21', reason: 'Personal', status: 'approved' },
           ].map((leave) => (
-            <div key={leave.id} className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+            <motion.div 
+              key={leave.id} 
+              whileHover={{ x: 5, backgroundColor: 'rgba(30, 58, 138, 0.2)' }}
+              className="flex justify-between items-center p-4 bg-blue-950/30 rounded-lg border border-blue-900/30 cursor-pointer"
+            >
               <div>
-                <p className="font-semibold">{leave.from} to {leave.to}</p>
-                <p className="text-sm text-gray-600">{leave.reason}</p>
+                <p className="font-semibold text-white">{leave.from} to {leave.to}</p>
+                <p className="text-sm text-gray-400">{leave.reason}</p>
               </div>
-              <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-semibold">
+              <span className="px-3 py-1 bg-green-500/20 text-green-400 border border-green-500/50 rounded-full text-sm font-semibold">
                 {leave.status}
               </span>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -214,62 +230,81 @@ const StaffDashboard = () => {
 
   const renderProfile = () => (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold">My Profile</h2>
+      <h2 className="text-3xl font-bold text-white">My Profile</h2>
 
-      <div className="card">
+      <div className="card-premium">
         <div className="flex items-center gap-6 mb-6">
-          <div className="w-24 h-24 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-3xl font-bold">
+          <motion.div 
+            whileHover={{ rotate: 360, scale: 1.1 }}
+            transition={{ duration: 0.6 }}
+            className="w-24 h-24 bg-gradient-to-r from-primary-600 to-primary-500 rounded-full flex items-center justify-center text-black text-3xl font-bold shadow-lg shadow-primary-500/50"
+          >
             {staffInfo.photo}
-          </div>
+          </motion.div>
           <div>
-            <h3 className="text-2xl font-bold">{staffInfo.name}</h3>
-            <p className="text-gray-600">{staffInfo.empId}</p>
-            <p className="text-gray-600">{staffInfo.department} Department</p>
+            <h3 className="text-2xl font-bold text-white">{staffInfo.name}</h3>
+            <p className="text-primary-400 font-semibold">{staffInfo.empId}</p>
+            <p className="text-gray-400">{staffInfo.department} Department</p>
           </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <div>
-            <p className="text-sm text-gray-600">Employee ID</p>
-            <p className="font-semibold">{staffInfo.empId}</p>
+          <div className="p-3 bg-blue-950/30 rounded-lg border border-blue-900/30">
+            <p className="text-sm text-gray-400">Employee ID</p>
+            <p className="font-semibold text-white">{staffInfo.empId}</p>
           </div>
-          <div>
-            <p className="text-sm text-gray-600">Department</p>
-            <p className="font-semibold">{staffInfo.department}</p>
+          <div className="p-3 bg-blue-950/30 rounded-lg border border-blue-900/30">
+            <p className="text-sm text-gray-400">Department</p>
+            <p className="font-semibold text-white">{staffInfo.department}</p>
           </div>
-          <div>
-            <p className="text-sm text-gray-600">Date of Joining</p>
-            <p className="font-semibold">{staffInfo.joinDate}</p>
+          <div className="p-3 bg-blue-950/30 rounded-lg border border-blue-900/30">
+            <p className="text-sm text-gray-400">Date of Joining</p>
+            <p className="font-semibold text-white">{staffInfo.joinDate}</p>
           </div>
-          <div>
-            <p className="text-sm text-gray-600">Total Assignments</p>
-            <p className="font-semibold">{assignments.length}</p>
+          <div className="p-3 bg-blue-950/30 rounded-lg border border-blue-900/30">
+            <p className="text-sm text-gray-400">Total Assignments</p>
+            <p className="font-semibold text-primary-400">{assignments.length}</p>
           </div>
         </div>
       </div>
 
-      <div className="card">
-        <h3 className="text-xl font-bold mb-4">Performance Stats</h3>
+      <div className="card-premium">
+        <h3 className="text-xl font-bold text-white mb-4">Performance Stats</h3>
         <div className="grid grid-cols-3 gap-4">
-          <div className="text-center p-4 bg-green-50 rounded-lg">
-            <p className="text-3xl font-bold text-green-600">45</p>
-            <p className="text-sm text-gray-600">Completed</p>
-          </div>
-          <div className="text-center p-4 bg-blue-50 rounded-lg">
-            <p className="text-3xl font-bold text-blue-600">3</p>
-            <p className="text-sm text-gray-600">In Progress</p>
-          </div>
-          <div className="text-center p-4 bg-orange-50 rounded-lg">
-            <p className="text-3xl font-bold text-orange-600">4.8</p>
-            <p className="text-sm text-gray-600">Avg Rating</p>
-          </div>
+          <motion.div 
+            whileHover={{ scale: 1.05, y: -5 }}
+            className="text-center p-4 bg-green-500/20 border border-green-500/30 rounded-lg"
+          >
+            <p className="text-3xl font-bold text-green-400">45</p>
+            <p className="text-sm text-gray-400">Completed</p>
+          </motion.div>
+          <motion.div 
+            whileHover={{ scale: 1.05, y: -5 }}
+            className="text-center p-4 bg-primary-500/20 border border-primary-500/30 rounded-lg"
+          >
+            <p className="text-3xl font-bold text-primary-400">3</p>
+            <p className="text-sm text-gray-400">In Progress</p>
+          </motion.div>
+          <motion.div 
+            whileHover={{ scale: 1.05, y: -5 }}
+            className="text-center p-4 bg-orange-500/20 border border-orange-500/30 rounded-lg"
+          >
+            <p className="text-3xl font-bold text-orange-400">4.8</p>
+            <p className="text-sm text-gray-400">Avg Rating</p>
+          </motion.div>
         </div>
       </div>
     </div>
   );
 
   return (
-    <div className="flex h-screen bg-gray-50">
+    <div className="flex h-screen bg-gradient-to-br from-black via-blue-950 to-black relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute w-96 h-96 bg-blue-600/20 rounded-full blur-3xl top-0 right-1/4 animate-pulse"></div>
+        <div className="absolute w-96 h-96 bg-primary-500/20 rounded-full blur-3xl bottom-0 left-1/4 animate-pulse delay-1000"></div>
+      </div>
+
       {/* Sidebar */}
       <AnimatePresence>
         {sidebarOpen && (
@@ -277,11 +312,17 @@ const StaffDashboard = () => {
             initial={{ x: -300 }}
             animate={{ x: 0 }}
             exit={{ x: -300 }}
-            className="w-64 bg-gradient-to-b from-blue-900 to-blue-800 text-white p-6 flex flex-col"
+            className="w-64 bg-gradient-to-b from-gray-900/95 via-blue-950/95 to-gray-900/95 backdrop-blur-xl border-r border-blue-900/50 text-white p-6 flex flex-col relative z-10"
           >
             <div className="mb-8">
-              <h1 className="text-2xl font-bold">Staff Portal</h1>
-              <p className="text-blue-200 text-sm">{staffInfo.department}</p>
+              <motion.h1 
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-2xl font-bold glow-text"
+              >
+                Staff Portal
+              </motion.h1>
+              <p className="text-gray-400 text-sm mt-1">{staffInfo.department}</p>
             </div>
 
             <nav className="flex-1 space-y-2">
@@ -292,12 +333,13 @@ const StaffDashboard = () => {
               ].map((item) => (
                 <motion.button
                   key={item.id}
-                  whileHover={{ x: 5 }}
+                  whileHover={{ x: 5, scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => setActiveTab(item.id)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-300 ${
                     activeTab === item.id
-                      ? 'bg-blue-600 text-white'
-                      : 'text-blue-100 hover:bg-blue-700'
+                      ? 'bg-gradient-to-r from-primary-600 to-primary-500 text-black font-semibold shadow-lg shadow-primary-500/50'
+                      : 'text-gray-300 hover:bg-blue-900/30 hover:text-primary-400 border border-transparent hover:border-primary-500/30'
                   }`}
                 >
                   <item.icon className="w-5 h-5" />
@@ -306,36 +348,44 @@ const StaffDashboard = () => {
               ))}
             </nav>
 
-            <button
-              onClick={() => navigate('/')}
-              className="flex items-center gap-3 px-4 py-3 text-blue-100 hover:bg-blue-700 rounded-lg transition-all"
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => navigate('/', { replace: true })}
+              className="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-red-400 hover:bg-red-900/20 border border-transparent hover:border-red-500/30 rounded-xl transition-all duration-300"
             >
               <LogOut className="w-5 h-5" />
               <span>Logout</span>
-            </button>
+            </motion.button>
           </motion.aside>
         )}
       </AnimatePresence>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden relative z-10">
         {/* Header */}
-        <header className="bg-white shadow-sm px-6 py-4 flex items-center justify-between">
-          <button
+        <header className="bg-gradient-to-r from-dark-50/90 to-blue-950/90 backdrop-blur-xl border-b border-blue-900/50 shadow-lg px-6 py-4 flex items-center justify-between">
+          <motion.button
+            whileHover={{ scale: 1.1, backgroundColor: "rgba(234, 179, 8, 0.1)" }}
+            whileTap={{ scale: 0.9 }}
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="p-2 hover:bg-gray-100 rounded-lg"
+            className="p-2 hover:bg-primary-500/10 rounded-lg text-gray-300 hover:text-primary-400 transition-all duration-300 border border-transparent hover:border-primary-500/30"
           >
             {sidebarOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          </motion.button>
 
           <div className="flex items-center gap-3">
             <div className="text-right">
-              <p className="font-semibold">{staffInfo.name}</p>
-              <p className="text-sm text-gray-500">{staffInfo.empId}</p>
+              <p className="font-semibold text-white">{staffInfo.name}</p>
+              <p className="text-sm text-gray-400">{staffInfo.empId}</p>
             </div>
-            <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
+            <motion.div 
+              whileHover={{ scale: 1.1, rotate: 360 }}
+              transition={{ duration: 0.5 }}
+              className="w-10 h-10 bg-gradient-to-r from-primary-600 to-primary-500 rounded-full flex items-center justify-center text-black font-bold shadow-lg shadow-primary-500/50"
+            >
               {staffInfo.photo}
-            </div>
+            </motion.div>
           </div>
         </header>
 
