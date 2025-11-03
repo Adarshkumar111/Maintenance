@@ -32,10 +32,33 @@ const LandingPage = () => {
   ];
 
   const features = [
-    { icon: QrCode, title: 'QR-Based Complaints', description: 'Easy complaint registration via QR codes' },
-    { icon: TrendingUp, title: 'Real-time Analytics', description: 'Track performance and trends instantly' },
-    { icon: Users, title: 'Staff Management', description: 'Efficient assignment and tracking' },
-    { icon: Shield, title: 'Role-Based Access', description: 'Secure access for different roles' },
+    { 
+      icon: QrCode, 
+      title: 'QR-Based Complaints', 
+      description: 'Easy complaint registration via QR codes',
+      action: () => {
+        // Scroll to user complaint section
+        document.getElementById('file-complaint')?.scrollIntoView({ behavior: 'smooth' });
+      }
+    },
+    { 
+      icon: TrendingUp, 
+      title: 'Real-time Analytics', 
+      description: 'Track performance and trends instantly',
+      action: () => navigate('/login')
+    },
+    { 
+      icon: Users, 
+      title: 'Staff Management', 
+      description: 'Efficient assignment and tracking',
+      action: () => navigate('/login')
+    },
+    { 
+      icon: Shield, 
+      title: 'Role-Based Access', 
+      description: 'Secure access for different roles',
+      action: () => navigate('/login')
+    },
   ];
 
   return (
@@ -83,6 +106,7 @@ const LandingPage = () => {
 
         {/* User Complaint Section */}
         <motion.div
+          id="file-complaint"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5, duration: 0.8 }}
@@ -244,7 +268,9 @@ const LandingPage = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
                 whileHover={{ scale: 1.05, y: -5 }}
-                className="group"
+                whileTap={{ scale: 0.98 }}
+                onClick={feature.action}
+                className="group cursor-pointer"
               >
                 <div className="card relative overflow-hidden h-full">
                   {/* Animated border */}
@@ -260,6 +286,9 @@ const LandingPage = () => {
                     </motion.div>
                     <h3 className="text-xl font-bold text-white mb-2 group-hover:text-primary-300 transition-colors duration-300">{feature.title}</h3>
                     <p className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300">{feature.description}</p>
+                    <p className="text-xs text-primary-400/60 group-hover:text-primary-300 mt-3 font-semibold transition-all duration-300">
+                      Click to explore →
+                    </p>
                   </div>
                 </div>
               </motion.div>
